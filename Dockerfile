@@ -30,6 +30,7 @@ RUN \
   apt-get remove -y g++                          && \
   apt-get remove -y gcc                          && \
   apt-get remove -y make                         && \
+  apt-get remove -y binutils                     && \
   apt-get autoremove -y                          && \
   apt-get clean                                  && \
   npm install amid -g
