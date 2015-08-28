@@ -27,7 +27,6 @@ RUN \
   cd /tmp                                        && \
   rm -rf /tmp/node-v*                            && \
   apt-get remove -y wget                         && \
-  apt-get remove -y python                       && \
   apt-get remove -y g++                          && \
   apt-get remove -y gcc                          && \
   apt-get remove -y make                         && \
@@ -44,4 +43,4 @@ EXPOSE 3000
 WORKDIR /data
 
 # Define default command.
-CMD ["/usr/bin/supervisord"]
+ENTRYPOINT ["/usr/bin/supervisord"]
