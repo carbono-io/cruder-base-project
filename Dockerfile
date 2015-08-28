@@ -7,23 +7,37 @@
 # Pull base image.
 FROM mongo
 
-# Install Node.js
+# Install everything
 RUN \
-  cd /tmp && \
+  cd /tmp                                        && \
+  apt-get update                                 && \
+  apt-get install -y wget                        && \
+  apt-get install -y python                      && \
+  apt-get install -y gcc                         && \
+  apt-get install -y g++                         && \
+  apt-get install -y make                        && \
   wget http://nodejs.org/dist/node-latest.tar.gz && \
-  tar xvzf node-latest.tar.gz && \
-  rm -f node-latest.tar.gz && \
-  cd node-v* && \
-  ./configure && \
-  CXX="g++ -Wno-unused-local-typedefs" make && \
-  CXX="g++ -Wno-unused-local-typedefs" make install && \
-  cd /tmp && \
-  rm -rf /tmp/node-v* && \
-  npm install -g npm && \
-  printf '\n# Node.js\nexport PATH="node_modules/.bin:$PATH"' >> /root/.bashrc
+  tar xvzf node-latest.tar.gz                    && \
+  rm -f node-latest.tar.gz                       && \
+  cd node-v*                                     && \
+  ./configure                                    && \
+  make                                           && \
+  make install                                   && \
+  cd /tmp                                        && \
+  rm -rf /tmp/node-v*                            && \
+  apt-get remove -y wget                         && \
+  apt-get remove -y python                       && \
+  apt-get remove -y g++                          && \
+  apt-get remove -y gcc                          && \
+  apt-get remove -y make                         && \
+  apt-get autoremove -y                          && \
+  apt-get clean                                  && \
+  npm install amid -g
+
+EXPOSE 3000
 
 # Define working directory.
 WORKDIR /data
 
 # Define default command.
-CMD ["bash"]
+CMD ["amid"]
