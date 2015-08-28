@@ -16,6 +16,7 @@ RUN \
   apt-get install -y gcc                         && \
   apt-get install -y g++                         && \
   apt-get install -y make                        && \
+  apt-get install -y supervisor                  && \
   wget http://nodejs.org/dist/node-latest.tar.gz && \
   tar xvzf node-latest.tar.gz                    && \
   rm -f node-latest.tar.gz                       && \
@@ -33,7 +34,9 @@ RUN \
   apt-get remove -y binutils                     && \
   apt-get autoremove -y                          && \
   apt-get clean                                  && \
-  npm install amid -g
+  npm install -g mongodb-rest
+
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 EXPOSE 3000
 
@@ -41,4 +44,4 @@ EXPOSE 3000
 WORKDIR /data
 
 # Define default command.
-CMD ["amid"]
+CMD ["/usr/bin/supervisord"]
