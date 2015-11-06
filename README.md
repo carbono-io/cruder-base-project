@@ -1,4 +1,4 @@
-	Cruder Base Project
+Cruder Base Project
 ===================
 
 This project aims to provide a general purpose CRUDer machine.
